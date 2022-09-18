@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import api from "../../../core/api";
+import clienteMicroservice from "../../../core/cliente.microservice";
 import { useErro } from "../../../hooks/erro/useErro";
 
 export function useHome () {
@@ -14,7 +13,7 @@ export function useHome () {
 
   async function buscarContagemCliente() {
     try {
-      const { data } = await api.get('/cliente/')
+      const { data } = await clienteMicroservice.get('/cliente/')
       setContagemCliente(data.length);
     } catch (error: any) {
       setErro(error.response.data.message ? error.response.data.message : 'Ocorreu um erro')
