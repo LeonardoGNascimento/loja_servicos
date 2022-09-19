@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const api = axios.create({
+const usuarioMicroservice = axios.create({
   baseURL: "http://localhost:3001",
 });
 
-api.interceptors.request.use(async (config) => {
+usuarioMicroservice.interceptors.request.use(async (config) => {
   const token = localStorage.getItem("@token");
 
   if (token) {
@@ -15,4 +15,4 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-export default api;
+export default usuarioMicroservice;

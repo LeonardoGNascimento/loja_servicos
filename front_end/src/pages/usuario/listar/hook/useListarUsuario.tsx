@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import api from "../../../../core/api";
+import usuarioMicroservice from "../../../../core/usuario.microservice";
 
-export function useListarUsuario () {
-
-  const [usuarios, setUsuarios] = useState<any[]>([])
-  const [busca, setBusca] = useState()
+export function useListarUsuario() {
+  const [usuarios, setUsuarios] = useState<any[]>([]);
+  const [busca, setBusca] = useState();
 
   useEffect(() => {
-    listar()
-  }, [busca])
+    listar();
+  }, [busca]);
 
   async function listar() {
-    const { data } = await api.get('/usuarios');     
-    setUsuarios(data)
+    const { data } = await usuarioMicroservice.get("/usuarios");
+    setUsuarios(data);
   }
 
   return {
-    usuarios
-  }
+    usuarios,
+  };
 }
