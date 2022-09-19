@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../../core/api";
+import menuMicroservice from "../../../core/menu.microservice";
 import { IMenu } from "../interface/IMenu";
 
 export function useMenu() {
@@ -11,8 +11,7 @@ export function useMenu() {
   }, []);
 
   async function listar() {
-    const { data } = await api.get(`/menu/`);
-    console.log(data);
+    const { data } = await menuMicroservice.get(`/menu/permissoes`);
     setMenu(data);
   }
 

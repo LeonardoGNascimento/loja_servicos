@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { Funcionalidade } from './Menu/dominio/models/funcionalidade.model';
 import { Menu } from './Menu/dominio/models/menu.model';
+import { Permissao } from './Menu/dominio/models/permissao.model';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { Menu } from './Menu/dominio/models/menu.model';
       synchronize: true,
       username: `${process.env.DATABASE_USER}`,
       password: `${process.env.DATABASE_PASSWORD}`,
-      entities: [Funcionalidade, Menu],
+      entities: [Funcionalidade, Menu, Permissao],
     }),
   ],
   controllers: [],
