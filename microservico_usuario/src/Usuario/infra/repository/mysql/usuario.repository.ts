@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Usuario } from 'src/Usuario/dominio/models/usuario.model';
+import { Usuario } from '../../../dominio/models/usuario.model';
 import { Repository } from 'typeorm';
 
 @Injectable()

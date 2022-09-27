@@ -4,8 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Usuario } from 'src/Usuario/dominio/models/usuario.model';
-import { UsuarioRepository } from 'src/Usuario/infra/repository/mysql/usuario.repository';
+import { Usuario } from '../../dominio/models/usuario.model';
+import { UsuarioRepository } from '../../infra/repository/mysql/usuario.repository';
 import * as crypto from 'crypto';
 
 @Injectable()

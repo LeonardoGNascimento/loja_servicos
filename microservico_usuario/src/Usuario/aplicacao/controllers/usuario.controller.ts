@@ -10,16 +10,16 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtGuard } from 'src/Auth/infra/services/jwt.guard';
-import { Usuario } from 'src/Usuario/dominio/models/usuario.model';
+import { JwtGuard } from '../../../Auth/infra/services/jwt.guard';
+import { Usuario } from '../../dominio/models/usuario.model';
 import { UsuarioService } from '../services/usuario.service';
 
 @Controller('usuarios')
+@UseGuards(JwtGuard)
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
 
   @Post()
-  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.CREATED)
   public async cria(@Body() usuario: Usuario): Promise<Usuario> {
     const usuarioCriado = await this.usuarioService.cria(usuario);
@@ -28,7 +28,6 @@ export class UsuarioController {
   }
 
   @Get()
-  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.OK)
   public async listar(): Promise<Usuario[]> {
     const usuarios = await this.usuarioService.listar();
@@ -37,7 +36,6 @@ export class UsuarioController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.OK)
   public async atualizar(
     @Param('id') id: number,
@@ -54,7 +52,6 @@ export class UsuarioController {
   }
 
   @Get(':id')
-  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.OK)
   public async buscar(@Param('id') id: number): Promise<Usuario> {
     const usuario = await this.usuarioService.buscar(id);
@@ -63,7 +60,6 @@ export class UsuarioController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   public async excluir(@Param('id') id: number): Promise<void> {
     const resultado = await this.usuarioService.excluir(id);

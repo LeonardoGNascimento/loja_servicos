@@ -24,7 +24,7 @@ export class Usuario {
   @IsString({ message: 'senha deve ser do tipo string' })
   senha: string;
 
-  static factory(id: number, nome: string, email: string, senha: string) {
+  static factory(id: number|null, nome: string, email: string, senha: string) {
     const usuario = new Usuario();
     usuario.id = id;
     usuario.nome = nome;
