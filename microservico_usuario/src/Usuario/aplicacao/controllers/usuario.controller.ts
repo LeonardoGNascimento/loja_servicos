@@ -10,6 +10,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ExcluirUsuarioQuery } from '../../dominio/query/excluirUsuario.query';
 import { JwtGuard } from '../../../Auth/infra/services/jwt.guard';
 import { Usuario } from '../../dominio/models/usuario.model';
 import { UsuarioService } from '../services/usuario.service';
@@ -22,17 +23,13 @@ export class UsuarioController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   public async cria(@Body() usuario: Usuario): Promise<Usuario> {
-    const usuarioCriado = await this.usuarioService.cria(usuario);
-
-    return usuarioCriado;
+    return await this.usuarioService.cria(usuario);
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
   public async listar(): Promise<Usuario[]> {
-    const usuarios = await this.usuarioService.listar();
-
-    return usuarios;
+    return await this.usuarioService.listar();
   }
 
   @Patch(':id')
@@ -41,29 +38,20 @@ export class UsuarioController {
     @Param('id') id: number,
     @Body() body,
   ): Promise<Usuario> {
-    const usuario = new Usuario();
-    usuario.id = id;
-    usuario.nome = body.nome;
-    usuario.email = body.email;
+    const usuario = Usuario.factory(id, body.nome, body.email);
 
-    const resultado = await this.usuarioService.atualizar(usuario);
-
-    return resultado;
+    return await this.usuarioService.atualizar(usuario);
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   public async buscar(@Param('id') id: number): Promise<Usuario> {
-    const usuario = await this.usuarioService.buscar(id);
-
-    return usuario;
+    return await this.usuarioService.buscar(id);
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public async excluir(@Param('id') id: number): Promise<void> {
-    const resultado = await this.usuarioService.excluir(id);
-
-    return resultado;
+  @HttpCode(HttpStatus.OK)
+  public async excluir(@Param('id') id: number): Promise<ExcluirUsuarioQuery> {
+    return await this.usuarioService.excluir(id);
   }
 }

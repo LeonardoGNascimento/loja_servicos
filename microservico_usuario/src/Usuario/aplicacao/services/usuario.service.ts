@@ -7,6 +7,7 @@ import {
 import { Usuario } from '../../dominio/models/usuario.model';
 import { UsuarioRepository } from '../../infra/repository/mysql/usuario.repository';
 import * as crypto from 'crypto';
+import { ExcluirUsuarioQuery } from '../../dominio/query/excluirUsuario.query';
 
 @Injectable()
 export class UsuarioService {
@@ -64,9 +65,10 @@ export class UsuarioService {
     return usuarios;
   }
 
-  public async excluir(id: number): Promise<void> {
+  public async excluir(id: number): Promise<ExcluirUsuarioQuery> {
     const usuario = await this.buscar(id);
     await this.usuarioRepository.excluir(usuario);
+    return new ExcluirUsuarioQuery(`Usuário id ${id} excluido com sucesso`);
   }
 
   public async atualizar(usuario: Usuario): Promise<Usuario> {

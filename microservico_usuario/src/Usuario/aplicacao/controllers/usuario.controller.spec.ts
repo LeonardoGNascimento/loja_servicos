@@ -1,19 +1,15 @@
 import { Test } from '@nestjs/testing';
+import { ExcluirUsuarioQuery } from '../../dominio/query/excluirUsuario.query';
 import { Usuario } from '../../dominio/models/usuario.model';
 import { UsuarioService } from '../services/usuario.service';
 import { UsuarioController } from './usuario.controller';
 
-const usuario: Usuario = Usuario.factory(
-  1,
-  'leo',
-  'leo@leo',
-  '123'
-)
-const usuarios: Usuario[] = [
-  usuario,
-  usuario
-];
+const usuario: Usuario = Usuario.factory(1, 'leo', 'leo@leo', '123');
+const usuarios: Usuario[] = [usuario, usuario];
 
+const usuarioExcluido = new ExcluirUsuarioQuery(
+  `Usuário id 1 excluido com sucesso`,
+);
 describe('UsuarioController', () => {
   let usuarioController: UsuarioController;
   let usuarioService: UsuarioService;
@@ -29,7 +25,7 @@ describe('UsuarioController', () => {
             cria: jest.fn().mockResolvedValue(usuario),
             buscar: jest.fn().mockResolvedValue(usuario),
             listar: jest.fn().mockResolvedValue(usuarios),
-            excluir: jest.fn(),
+            excluir: jest.fn().mockResolvedValue(usuarioExcluido),
             atualizar: jest.fn().mockResolvedValue(usuario),
           },
         },
@@ -75,8 +71,7 @@ describe('UsuarioController', () => {
   describe('excluir', () => {
     it('Deve excluir um usuários', async () => {
       const resultado = await usuarioController.excluir(1);
-      //atualizar metodo
-      expect(null).toEqual(null);
+      expect(resultado.message).toEqual('Usuário id 1 excluido com sucesso');
     });
   });
 });

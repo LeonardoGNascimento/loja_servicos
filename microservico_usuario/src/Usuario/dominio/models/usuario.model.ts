@@ -24,12 +24,19 @@ export class Usuario {
   @IsString({ message: 'senha deve ser do tipo string' })
   senha: string;
 
-  static factory(id: number|null, nome: string, email: string, senha: string) {
+  static factory(
+    id: number | null,
+    nome: string,
+    email: string,
+    senha: string = '',
+  ) {
     const usuario = new Usuario();
     usuario.id = id;
     usuario.nome = nome;
     usuario.email = email;
-    usuario.senha = crypto.createHash('md5').update(senha).digest('hex');
+    usuario.senha = senha
+      ? crypto.createHash('md5').update(senha).digest('hex')
+      : '';
 
     return usuario;
   }
